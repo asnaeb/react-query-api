@@ -1,2 +1,5 @@
-export {QueryApi} from "./QueryApi.ts";
-export {createQueryFn} from "./createQueryFn.ts";
+export * from "./QueryApi.ts";
+export * from "./Query.ts";
+export * from "./types.ts";
+export * from "./Mutation.ts";
+export * from "./createQueryFn.ts";

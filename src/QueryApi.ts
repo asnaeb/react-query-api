@@ -21,7 +21,7 @@ abstract class QueryApi<TError extends Error = Error> {
   private readonly queries: Array<string> = [];
   private readonly mutations: Array<string> = [];
 
-  protected constructor(private readonly id: string, private readonly queryClient: QueryClient) {}
+  constructor(private readonly id: string, private readonly queryClient: QueryClient) {}
 
   protected createDefaultQueryKey(id: string) {
     if (this.queries.includes(id)) {
@@ -41,7 +41,7 @@ abstract class QueryApi<TError extends Error = Error> {
     return this.id;
   }
 
-  createQuery<R, A extends ReadonlyArray<unknown>>(
+  protected createQuery<R, A extends ReadonlyArray<unknown>>(
     id: string,
     factory: (...args: A) => Omit<
       UseQueryOptions<R, TError>,
@@ -65,7 +65,7 @@ abstract class QueryApi<TError extends Error = Error> {
     );
   }
 
-  createInfiniteQuery<R, A extends ReadonlyArray<unknown>, J, P>(
+  protected createInfiniteQuery<R, A extends ReadonlyArray<unknown>, J, P>(
     id: string,
     factory: (...args: A) => Omit<
       UseInfiniteQueryOptions<R, TError, J, R, QueryKey, P>,
@@ -82,7 +82,7 @@ abstract class QueryApi<TError extends Error = Error> {
     };
   }
 
-  createMutation<TData, TVariables, TContext>(
+  protected createMutation<TData, TVariables, TContext>(
     id: string,
     {mutationFn, revalidationFn, ...mutationOptions}: MutationParams<TData, TError, TVariables, TContext>
   ) {
