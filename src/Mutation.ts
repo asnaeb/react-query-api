@@ -15,8 +15,8 @@ class Mutation<TData = unknown, TError = Error, TVariables = void, TContext = un
     this.mutationOptions = mutationOptions;
   }
 
-  mutate(variables: TVariables) {
-    return this.mutationFn(variables);
+  get mutate() {
+    return this.mutationFn;
   }
 
   revalidate(data: TData, params: TVariables) {
