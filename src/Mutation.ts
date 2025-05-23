@@ -31,7 +31,7 @@ class Mutation<TData = unknown, TError = Error, TVariables = void, TContext = un
       onSettled,
       revalidation,
       ...additionalOptions
-    }: UseMutationParams<TData, TError, TVariables, TAdditionalContext>
+    }: UseMutationParams<TData, TError, TVariables, TAdditionalContext> = {}
   ) {
     const awaitRevalidation = revalidation?.awaitRevalidation ?? true;
     const revalidate = revalidation?.revalidate ?? true;

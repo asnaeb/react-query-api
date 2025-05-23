@@ -41,12 +41,12 @@ abstract class QueryApi<TError extends Error = Error> {
     return this.id;
   }
 
-  protected createQuery<R, A extends ReadonlyArray<unknown>>(
+  protected createQuery<TData = unknown, A extends ReadonlyArray<unknown> = ReadonlyArray<unknown>>(
     id: string,
     factory: (...args: A) => Omit<
-      UseQueryOptions<R, TError>,
+      UseQueryOptions<TData, TError>,
       "select" | "queryKey" | "queryFn"
-    > & {queryKey?: QueryKey; queryFn: QueryFunction<R, QueryKey, never>}
+    > & {queryKey?: QueryKey; queryFn: QueryFunction<TData, QueryKey, never>}
   ) {
     const baseQueryKey = this.createDefaultQueryKey(id);
 
@@ -55,7 +55,9 @@ abstract class QueryApi<TError extends Error = Error> {
         const resolvedOptions = resolveQueryOptions(baseQueryKey, factory, args);
         const hashedKey = hashKey(resolvedOptions.queryKey);
 
-        return (this.queryCache[hashedKey] ??= new Query(id, resolvedOptions, this.queryClient)) as Query<R, TError>;
+        return (
+          this.queryCache[hashedKey] ??= new Query(id, resolvedOptions, this.queryClient)
+        ) as Query<TData, TError>;
       },
       {
         isFetchingAny: () => this.queryClient.isFetching({queryKey: baseQueryKey, type: "all", stale: true}),
@@ -82,7 +84,7 @@ abstract class QueryApi<TError extends Error = Error> {
     };
   }
 
-  protected createMutation<TData, TVariables, TContext>(
+  protected createMutation<TData = unknown, TVariables = void, TContext = unknown>(
     id: string,
     {mutationFn, revalidationFn, ...mutationOptions}: MutationParams<TData, TError, TVariables, TContext>
   ) {
