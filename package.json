@@ -1,7 +1,7 @@
 {
   "name": "@asn.aeb/react-query-api",
   "private": false,
-  "version": "1.0.5",
+  "version": "1.0.6",
   "description": "An abstraction over @tanstack/react-query",
   "license": "MIT",
   "author": "Roberto De Lucia",

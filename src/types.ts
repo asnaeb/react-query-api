@@ -5,7 +5,7 @@ export interface ApiQueryFunction<T> {
   map<R = T>(mapper: (result: T) => R): (args: {signal: AbortSignal}) => Promise<R>;
 };
 
-export type RevalidationFn<TData, TVariables> = (data: TData, params: TVariables) => void | Promise<void>;
+export type RevalidationFn<TData, TVariables> = (data: TData, params: TVariables) => unknown | Promise<unknown>;
 
 export interface RevalidationParams<TData, TVariables> {
   /**
