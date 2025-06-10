@@ -23,6 +23,12 @@ class Mutation<TData = unknown, TError = Error, TVariables = void, TContext = un
     return this.revalidationFn?.(data, params);
   }
 
+  async mutateAndRevalidate(variables: TVariables) {
+    const response = await this.mutate(variables);
+    await this.revalidate(response, variables);
+    return response;
+  }
+
   useMutation<TAdditionalContext extends TContext = TContext>(
     {
       onMutate,
